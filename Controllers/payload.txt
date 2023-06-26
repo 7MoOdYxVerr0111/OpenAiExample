@@ -1,0 +1,218 @@
+Hello I will send you a json object and you need to provide me with a C# class coresponding with that json object.
+First I will provide you an example with what you need to do.
+Example json object:
+[
+  {
+    "CompanyName": "Ford",
+    "Address": {
+      "City": "Craiova",
+      "CountyCode": "RO",
+      "Street": "Henry Ford",
+      "Number": "101"
+    },
+    "Products": [
+      {
+        "Name": "Ford Puma",
+        "Cost": 12000,
+        "Price": 20000,
+        "Materials": ["Motor", "Roti"]
+      },
+      {
+        "Name": "Ford Ecosport",
+        "Cost": 10000,
+        "Price": 140000,
+        "Materials": ["Volan"]
+      }
+    ],
+    "ReferenceId": "46f4d0ef-32a9-4f63-a6e2-4e4b2679721c"
+  },
+  {
+    "CompanyName": "Dacia",
+    "Address": {
+      "City": "Romania",
+      "CountyCode": "RO",
+      "Street": "Strada Vladimir Iancu",
+      "Number": "456"
+    },
+    "Products": [
+      {
+        "Name": "Logan",
+        "Cost": 9000,
+        "Price": 12000,
+        "Materials": ["Roti", "Banchete"]
+      },
+      {
+        "Name": "Duster",
+        "Cost": 12000,
+        "Price": 15000,
+        "Materials": ["Suspensie", "Discuri de frana"]
+      }
+    ],
+    "ReferenceId": "8e393bcc-5dbb-4c0f-bb68-9f45a265927f"
+  },
+  {
+    "CompanyName": "BMW",
+    "Address": {
+      "City": "Germania",
+      "CountyCode": "DE",
+      "Street": "Sangerhausen",
+      "Number": "78 Flotowstr"
+    },
+    "Products": [
+      {
+        "Name": "320d",
+        "Cost": 18000,
+        "Price": 21000,
+        "Materials": ["Evacuare", "Placute"]
+      }
+    ],
+    "ReferenceId": "51d39f2e-8868-4c7b-83a5-6e240f8bb0a2"
+  }
+]
+For this example the correct C# class is:
+public class Company
+{
+    public string CompanyName { get; set; }
+    public Address Address { get; set; }
+    public List<Product> Products { get; set; }
+    public Guid ReferenceId { get; set; }
+}
+
+public class Address
+{
+    public string City { get; set; }
+    public string CountyCode { get; set; }
+    public string Street { get; set; }
+    public string Number { get; set; }
+}
+
+public class Product
+{
+    public string Name { get; set; }
+    public float Cost { get; set; }
+    public float Price { get; set; }
+    public List<string> Materials { get; set; }
+}
+Now please provide me a C# class for this json object:
+[
+   {
+      "CompanyName":"MetalSRL",
+      "Address":{
+         "City":"Vlaiesti",
+         "CountyCode":"RO",
+         "Street":"Costache Iorga",
+         "Number":"123B"
+      },
+      "AccountId":"b88a7744-1930-4b9b-bb0e-2d1f8f3c2f84",
+      "BankInformations":{
+         "Name":"ING",
+         "Id":"86ed120d-84ef-4bdc-a2b6-0a25e2d6eb1a",
+         "Address":{
+            "City":"Olanda",
+            "CountyCode":"NL",
+            "Street":"Bank Street",
+            "Number":"235"
+         }
+      },
+      "Products":[
+         {
+            "Name":"Bari metalice",
+            "CostOfProduction":10.5,
+            "Price":19.99,
+            "Materials":[
+               {
+                  "MaterialId":"dfb1e32b-29d5-4a35-9abf-3c4b3984f50d",
+                  "Name":"Fier",
+                  "PriceOfMaterial":"5.99"
+               },
+               {
+                  "MaterialId":"9fc42c20-9a71-4b9f-af6c-821c2f1c0c61",
+                  "Name":"Gaz",
+                  "PriceOfMaterial":"3.99"
+               }
+            ]
+         }
+      ],
+      "ReferenceId":"46f4d0ef-32a9-4f63-a6e2-4e4b2679721c"
+   },
+   {
+      "CompanyName":"IceCream Corporation",
+      "Address":{
+         "City":"Craiova",
+         "CountyCode":"RO",
+         "Street":"Str. Ghetii",
+         "Number":"101A"
+      },
+      "AccountId":"c0d7f543-02a5-4a2b-bd11-1390e77c0d45",
+      "BankInformations":{
+         "Name":"BRD",
+         "Id":"e44967a5-0704-4775-9303-40f9185ee57e",
+         "Address":{
+            "City":"Paris",
+            "CountyCode":"FR",
+            "Street":"Bank Avenue",
+            "Number":"126Ac"
+         }
+      },
+      "Products":[
+         {
+            "Name":"Inghetata la con",
+            "CostOfProduction":12.75,
+            "Price":24.99,
+            "Materials":[
+               {
+                  "MaterialId":"5b244864-8c99-4961-8a7b-ec9b301fe195",
+                  "Name":"Inghetata",
+                  "PriceOfMaterial":"7.99"
+               },
+               {
+                  "MaterialId":"34b43dfe-c795-4eb3-a7d9-b4a4d48e6012",
+                  "Name":"Con",
+                  "PriceOfMaterial":"4.99"
+               }
+            ]
+         }
+      ],
+      "ReferenceId":"8e393bcc-5dbb-4c0f-bb68-9f45a265927f"
+   },
+   {
+      "CompanyName":"Your Diamond",
+      "Address":{
+         "City":"San Diego",
+         "CountyCode":"USA",
+         "Street":"Maple Street",
+         "Number":"789"
+      },
+      "AccountId":"e95e8e6c-6d0a-4a77-8c3a-df8a41e382c1",
+      "BankInformations":{
+         "Name":"Bank of America",
+         "Id":"b7db1460-53d7-4e6d-a53f-7c8a84932b4c",
+         "Address":{
+            "City":"Chicago",
+            "CountyCode":"IL",
+            "Street":"Street of Money",
+            "Number":"987"
+         }
+      },
+      "Products":[
+         {
+            "Name":"Diamond Ring",
+            "CostOfProduction":9999.99,
+            "Price":599999.99,
+            "Materials":[
+               {
+                  "MaterialId":"1ef0246a-1ad5-419a-9ed9-5a9f157ae912",
+                  "Name":"Diamond",
+                  "PriceOfMaterial":"8999.99"
+               },
+               {
+                  "MaterialId":"fd166dbd-5fe5-4057-b1f4-51d91b9b6929",
+                  "Name":"Ring",
+                  "PriceOfMaterial":"1000"
+               }
+            ]
+         }
+      ],
+      "ReferenceId":"51d39f2e-8868-4c7b-83a5-6e240f8bb0a2"
+   }
+]

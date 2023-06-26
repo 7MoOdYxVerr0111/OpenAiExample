@@ -43,5 +43,13 @@ namespace OpenAIApp.Controllers
             var result = await _openAiService.CheckProgrammingLanguage(text);
             return Ok(result);
         }
+
+        [HttpGet()]
+        [Route("GenerateClass")]
+        public async Task<IActionResult> GenerateResponseFromFile()
+        {
+            var result = await _openAiService.GenerateResponseFromFile();
+            return Ok(result);
+        }
     }
 }

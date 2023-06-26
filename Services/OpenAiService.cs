@@ -1,18 +1,24 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using OpenAI_API.Completions;
 using OpenAI_API.Models;
 using OpenAIApp.Configurations;
+using System.Net.Http;
 
 namespace OpenAIApp.Services
 {
     public class OpenAiService : IOpenAiService
     {
         private readonly OpenAiConfig _openAiConfig;
+        private readonly HttpClient httpClient;
         public OpenAiService(
             IOptionsMonitor<OpenAiConfig> optionsMonitor
         )
         {
             _openAiConfig = optionsMonitor.CurrentValue;
+            httpClient = new HttpClient();
         }
 
         public async Task<string> CheckProgrammingLanguage(string language)
@@ -49,5 +55,35 @@ namespace OpenAIApp.Services
 
             return result.Completions[0].Text;
         }
+
+        public async Task<string> GenerateResponseFromFile()
+        {
+            try
+            {
+                string instructions = await ReadFileContents("Controllers/payload.txt");
+                var api = new OpenAI_API.OpenAIAPI(_openAiConfig.Key);
+                var result = await api.Completions.CreateCompletionAsync(new CompletionRequest(instructions)
+                {
+                    Model = "text-davinci-003",
+                    MaxTokens = 500
+                });
+                string response = result.Completions[0].Text;
+                return response;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error generating response: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<string> ReadFileContents(string filePath)
+        {
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                return await reader.ReadToEndAsync();
+            }
+        }
+
     }
 }

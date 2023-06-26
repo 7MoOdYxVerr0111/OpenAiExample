@@ -7,5 +7,7 @@
         Task<string> CompleteSentenceAdvance(string text);
 
         Task<string> CheckProgrammingLanguage(string language);
+
+        Task<string> GenerateResponseFromFile();
     }
 }
