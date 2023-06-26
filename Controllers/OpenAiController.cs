@@ -8,11 +8,11 @@ namespace OpenAIApp.Controllers
     [Route("[controller]")]
     public class OpenAiController : ControllerBase
     {
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<OpenAiController> _logger;
         private readonly IOpenAiService _openAiService;
 
         public OpenAiController(
-            ILogger<WeatherForecastController> logger,
+            ILogger<OpenAiController> logger,
             IOpenAiService openAiService)
         {
             _logger = logger;

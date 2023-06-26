@@ -1,3 +1,17 @@
 bin/
 obj/
 .vs/
+*.vsidx
+*.pdb
+*.dll
+*.cache
+*.pdb
+*.exe
+*.pdb
+*.props
+*.vsidx
+.vs/OpenAIApp/FileContentIndex/f0976116-26a9-4132-b9a9-b8b6d9ea5850.vsidx
+.vs/OpenAIApp/FileContentIndex/2426daef-ef7d-4537-82ab-f58a4e372359.vsidx
+.vs/OpenAIApp/FileContentIndex/4e8aef00-8bda-4ac8-8a9e-ebbf20ed74fa.vsidx
+.vs/OpenAIApp/FileContentIndex/b9d1ee9e-8416-4e01-88ff-c831f2ca97ff.vsidx
+*.v2
