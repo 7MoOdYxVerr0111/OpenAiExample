@@ -72,8 +72,7 @@ namespace OpenAIApp.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error generating response: {ex.Message}");
-                return null;
+                return($"Error generating response: {ex.Message}");
             }
         }
 
