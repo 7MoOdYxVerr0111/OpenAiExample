@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using OpenAIApp.Services;
 
 
@@ -49,6 +50,15 @@ namespace OpenAIApp.Controllers
         public async Task<IActionResult> GenerateResponseFromFile()
         {
             var result = await _openAiService.GenerateResponseFromFile();
+            return Ok(result);
+        }
+
+        [EnableCors]    
+        [HttpPost]
+        [Route("MakeAImove")]
+        public async Task<IActionResult> GetNextMove([FromBody] string[][] gameBoard)
+        {
+            var result = await _openAiService.MakeAImove(gameBoard);
             return Ok(result);
         }
     }

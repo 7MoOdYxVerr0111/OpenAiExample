@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using OpenAI_API.Completions;
-using OpenAI_API.Models;
 using OpenAIApp.Configurations;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 
 namespace OpenAIApp.Services
 {
@@ -51,7 +52,7 @@ namespace OpenAIApp.Services
             var api = new OpenAI_API.OpenAIAPI(_openAiConfig.Key);
 
             var result = await api.Completions.CreateCompletionAsync(
-                new CompletionRequest(text, model: Model.CurieText, temperature: 0.1));
+                new CompletionRequest(text, model: OpenAI_API.Models.Model.CurieText, temperature: 0.1));
 
             return result.Completions[0].Text;
         }
@@ -84,5 +85,54 @@ namespace OpenAIApp.Services
             }
         }
 
+
+        public async Task<List<int>> MakeAImove([FromBody] string[][] gameBoard)
+        {
+            var api = new OpenAI_API.OpenAIAPI(_openAiConfig.Key);
+            string instructions = "So we are going to play a game of Tic Tac Toe, I am the X player and you are going to be O." +
+                "You don't need to ask me for my move, you just respond your move with O based on the game board I send you." +
+                "I will send you the game board and you are going to send me your move in this format x,y  (x is number of the row and y is the number of the column) just an answer with x,y." +
+                "The answer represent the coorect coordinates of your move in order to beat me ,rules x and y are between 0 and 2 and you can only choose a move where the value on the board is [ ], not [O] or [X]. The board is: \n";
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++)
+                {
+                    instructions +=  "[" + (gameBoard[i][j] == "" ? " " : gameBoard[i][j]) + "]";
+                }
+                instructions += "\n";
+            }
+            instructions += "Try to win the game against X based on the rules of Tic Tac Toe game to finish a line or a diagonal on the game board with O before X finishing one of them";
+            var result = await api.Completions.CreateCompletionAsync(new CompletionRequest(instructions)
+            {
+                Model = "text-davinci-003",
+                MaxTokens = 500
+            });
+            List<int> response = new List<int>();
+            string pattern = @"[0-9]";
+            MatchCollection matches = Regex.Matches(result.Completions[0].Text, pattern);  
+            for (int i = 0; i < 2 && i < matches.Count; i++)
+            {
+                if (int.TryParse(matches[i].Value, out int number))
+                {
+                    response.Add(number);
+                }
+            }
+            while(gameBoard[response[0]][response[1]] != "" || (response[0] > 2 || response[0] < 0) || (response[1] > 2 || response[1] < 0))
+            {
+                result= await api.Completions.CreateCompletionAsync(new CompletionRequest(instructions)
+                {
+                    Model = "text-davinci-003",
+                    MaxTokens = 500
+                });
+                matches = Regex.Matches(result.Completions[0].Text, pattern);
+                for (int i = 0; i < 2 && i < matches.Count; i++)
+                {
+                    if (int.TryParse(matches[i].Value, out int number))
+                    {
+                        response[i] = number;
+                    }
+                }
+            }
+            return response;
+        }
     }
 }

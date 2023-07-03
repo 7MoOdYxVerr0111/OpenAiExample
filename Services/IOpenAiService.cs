@@ -1,4 +1,6 @@
-﻿namespace OpenAIApp.Services
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace OpenAIApp.Services
 {
     public interface IOpenAiService
     {
@@ -9,5 +11,6 @@
         Task<string> CheckProgrammingLanguage(string language);
 
         Task<string> GenerateResponseFromFile();
+        Task<List<int>> MakeAImove([FromBody] string[][] gameBoard);
     }
 }
